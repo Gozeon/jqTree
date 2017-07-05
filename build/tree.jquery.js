@@ -755,9 +755,9 @@ var SimpleWidget = (function () {
     SimpleWidget.prototype._deinit = function () {
         //
     };
+    SimpleWidget.defaults = {};
     return SimpleWidget;
 }());
-SimpleWidget.defaults = {};
 exports["default"] = SimpleWidget;
 
 
@@ -828,19 +828,19 @@ var JqTreeWidget = (function (_super) {
         return this.element;
     };
     /*
-    signatures:
-    - loadDataFromUrl(url, parent_node=null, on_finished=null)
-        loadDataFromUrl('/my_data');
-        loadDataFromUrl('/my_data', node1);
-        loadDataFromUrl('/my_data', node1, function() { console.log('finished'); });
-        loadDataFromUrl('/my_data', null, function() { console.log('finished'); });
+     signatures:
+     - loadDataFromUrl(url, parent_node=null, on_finished=null)
+     loadDataFromUrl('/my_data');
+     loadDataFromUrl('/my_data', node1);
+     loadDataFromUrl('/my_data', node1, function() { console.log('finished'); });
+     loadDataFromUrl('/my_data', null, function() { console.log('finished'); });
 
-    - loadDataFromUrl(parent_node=null, on_finished=null)
-        loadDataFromUrl();
-        loadDataFromUrl(node1);
-        loadDataFromUrl(null, function() { console.log('finished'); });
-        loadDataFromUrl(node1, function() { console.log('finished'); });
-    */
+     - loadDataFromUrl(parent_node=null, on_finished=null)
+     loadDataFromUrl();
+     loadDataFromUrl(node1);
+     loadDataFromUrl(null, function() { console.log('finished'); });
+     loadDataFromUrl(node1, function() { console.log('finished'); });
+     */
     JqTreeWidget.prototype.loadDataFromUrl = function (param1, param2, param3) {
         if ($.type(param1) === "string") {
             // first parameter is url
@@ -1101,9 +1101,9 @@ var JqTreeWidget = (function (_super) {
         }
     };
     /*
-    Redraw the tree or part of the tree.
+     Redraw the tree or part of the tree.
      from_node: redraw this subtree
-    */
+     */
     JqTreeWidget.prototype._refreshElements = function (from_node) {
         this.renderer.render(from_node);
         this._triggerEvent("tree.refresh");
@@ -1416,6 +1416,12 @@ var JqTreeWidget = (function (_super) {
                 if (!event_1.isDefaultPrevented()) {
                     this._selectNode(node, true);
                 }
+                if (click_target.node.hasOwnProperty("children") &&
+                    click_target.node.children.length > 0) {
+                    this.toggle(click_target.node, this.options.slide);
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
             }
         }
     };
@@ -1697,43 +1703,43 @@ var JqTreeWidget = (function (_super) {
             _this._openNode(node, slide, on_finished);
         });
     };
+    JqTreeWidget.defaults = {
+        autoOpen: false,
+        saveState: false,
+        dragAndDrop: false,
+        selectable: true,
+        useContextMenu: true,
+        onCanSelectNode: null,
+        onSetStateFromStorage: null,
+        onGetStateFromStorage: null,
+        onCreateLi: null,
+        onIsMoveHandle: null,
+        // Can this node be moved?
+        onCanMove: null,
+        // Can this node be moved to this position? function(moved_node, target_node, position)
+        onCanMoveTo: null,
+        onLoadFailed: null,
+        autoEscape: true,
+        dataUrl: null,
+        // The symbol to use for a closed node - ► BLACK RIGHT-POINTING POINTER
+        // http://www.fileformat.info/info/unicode/char/25ba/index.htm
+        closedIcon: null,
+        // The symbol to use for an open node - ▼ BLACK DOWN-POINTING TRIANGLE
+        // http://www.fileformat.info/info/unicode/char/25bc/index.htm
+        openedIcon: "&#x25bc;",
+        slide: true,
+        nodeClass: node_1.Node,
+        dataFilter: null,
+        keyboardSupport: true,
+        openFolderDelay: 500,
+        rtl: false,
+        onDragMove: null,
+        onDragStop: null,
+        buttonLeft: true,
+        onLoading: null
+    };
     return JqTreeWidget;
 }(mouse_widget_1["default"]));
-JqTreeWidget.defaults = {
-    autoOpen: false,
-    saveState: false,
-    dragAndDrop: false,
-    selectable: true,
-    useContextMenu: true,
-    onCanSelectNode: null,
-    onSetStateFromStorage: null,
-    onGetStateFromStorage: null,
-    onCreateLi: null,
-    onIsMoveHandle: null,
-    // Can this node be moved?
-    onCanMove: null,
-    // Can this node be moved to this position? function(moved_node, target_node, position)
-    onCanMoveTo: null,
-    onLoadFailed: null,
-    autoEscape: true,
-    dataUrl: null,
-    // The symbol to use for a closed node - ► BLACK RIGHT-POINTING POINTER
-    // http://www.fileformat.info/info/unicode/char/25ba/index.htm
-    closedIcon: null,
-    // The symbol to use for an open node - ▼ BLACK DOWN-POINTING TRIANGLE
-    // http://www.fileformat.info/info/unicode/char/25bc/index.htm
-    openedIcon: "&#x25bc;",
-    slide: true,
-    nodeClass: node_1.Node,
-    dataFilter: null,
-    keyboardSupport: true,
-    openFolderDelay: 500,
-    rtl: false,
-    onDragMove: null,
-    onDragStop: null,
-    buttonLeft: true,
-    onLoading: null
-};
 simple_widget_1["default"].register(JqTreeWidget, "tree");
 
 
@@ -2527,12 +2533,12 @@ var KeyHandler = (function () {
             active_element.tagName === "SPAN" &&
             this.tree_widget._containsElement(active_element));
     };
+    KeyHandler.LEFT = 37;
+    KeyHandler.UP = 38;
+    KeyHandler.RIGHT = 39;
+    KeyHandler.DOWN = 40;
     return KeyHandler;
 }());
-KeyHandler.LEFT = 37;
-KeyHandler.UP = 38;
-KeyHandler.RIGHT = 39;
-KeyHandler.DOWN = 40;
 exports["default"] = KeyHandler;
 
 
