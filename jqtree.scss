@@ -49,6 +49,10 @@ ul.jqtree-tree {
     .jqtree-element {
         cursor: pointer;
         position: relative;
+        &:hover {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
     }
 
     .jqtree-title {
@@ -77,10 +81,13 @@ ul.jqtree-tree {
         /* todo: add classes to span? */
         span {
             display: block;
+
+            outline: 0;
+            border: 0;
         }
 
         span.jqtree-circle {
-            border: solid 2px #0000ff;
+            //border: solid 2px #0000ff;
             -webkit-border-radius: 100px;
             -moz-border-radius: 100px;
             border-radius: 100px;
@@ -114,24 +121,24 @@ ul.jqtree-tree {
         display: block;
         left: -2px;
         top: 0;
-        border: solid 2px #0000ff;
-        border-radius: 6px;
+        //border: solid 2px #0000ff;
+        //border-radius: 6px;
         margin: 0;
         box-sizing: content-box;
     }
 
-    li.jqtree-selected > .jqtree-element,
-    li.jqtree-selected > .jqtree-element:hover {
-        background-color: #97BDD6;
-        background: -webkit-gradient(linear, left top, left bottom, from(#BEE0F5), to(#89AFCA));
-        background: -moz-linear-gradient(top, #BEE0F5, #89AFCA);
-        background: -ms-linear-gradient(top, #BEE0F5, #89AFCA);
-        background: -o-linear-gradient(top, #BEE0F5, #89AFCA);
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
-    }
-
     .jqtree-moving > .jqtree-element .jqtree-title {
-        outline: dashed 1px #0000ff;
+        //outline: dashed 1px #0000ff;
+        outline: 0;
+        border: 0;
+    }
+    span {
+        outline: 0;
+        border: 0;
+        &:focus {
+            outline: 0;
+            border: 0;
+        }
     }
 }
 
